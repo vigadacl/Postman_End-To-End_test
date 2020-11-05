@@ -1,0 +1,12 @@
+[
+	{ 
+		"endpoint": "api/register/prepod",
+		"email":  "aminata@reqres.in",
+		"password": "12345678a"
+	},
+	{ 
+		"endpoint": "api/register/prepod",
+		"email":  "dovine@reqres.in",
+		"password": "qwertzy"
+	}
+]

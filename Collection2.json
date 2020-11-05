@@ -1,0 +1,218 @@
+{
+	"info": {
+		"_postman_id": "94ddbc94-24ea-49ac-b9fe-66b8e0120f90",
+		"name": "Collection2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "Test_List_allUsers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9c5345b3-98d7-45e9-b850-dc246ec61e0f",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"\r",
+									"//Verify there is least one user in the list or that the list is not empty\r",
+									"pm.test(\"Verify that there is least one user in the list\", function () {\r",
+									"    let total = jsonData.data.length;\r",
+									"    console.log(\"total element in the list: \"+ total);\r",
+									"    pm.expect(jsonData.data.length).to.least(1);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"//Verify the length of data size\r",
+									"pm.test(\"Verify that data size return 6 users\", function () {\r",
+									"    pm.expect(jsonData.data.length).to.eql(6);\r",
+									"});\r",
+									"\r",
+									"//verify that the list contains email 'michael.lawson@reqres.in'\r",
+									"pm.test(\"Verify that the list contains the email 'michael.lawson@reqres.in'\",  function () {\r",
+									"    pm.expect(_isContains(jsonData.data, \"email\" ,\"michael.lawson@reqres.in\")).to.be.true;\r",
+									"})\r",
+									"\r",
+									"\r",
+									"function _isContains(json, keyname, value) {\r",
+									" return Object.keys(json).some(key => {\r",
+									"        return typeof json[key] === 'object' ? \r",
+									"        _isContains(json[key], keyname, value) : key === keyname && json[key] === value;\r",
+									"    });\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url_test}}/api/users?page=2",
+							"host": [
+								"{{url_test}}"
+							],
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test_user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "52242fc7-7961-4f37-b75c-9f93d9084eaf",
+								"exec": [
+									"\r",
+									"\r",
+									"pm.test(\"Verify that status code is 200\", function () {\r",
+									"     console.log(\"Status is: \" + pm.response.status);\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_test}}/api/users/2",
+							"host": [
+								"{{url_test}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "POST",
+			"item": [
+				{
+					"name": "Test_registration",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d05ba00-269e-4eb1-be97-c703ae00c9c1",
+								"exec": [
+									"tests[\"Verify that the reponse body contains email\"] = responseBody.has(data.email);\r",
+									"\r",
+									"tests[\"Verify that the reponse body contains password\"] = responseBody.has(data.password);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{password}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url_test}}/{{endpoint}}",
+							"host": [
+								"{{url_test}}"
+							],
+							"path": [
+								"{{endpoint}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "32faab99-22ac-4d56-b72f-314b501a94ed",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "3ac1c196-026c-4b60-816b-df86dba86162",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "b5a56eef-9713-447a-b74c-b9b8f22a5a60",
+			"key": "url_test",
+			"value": "https://reqres.in"
+		},
+		{
+			"id": "56ee0233-69f7-4ba1-bcb7-2c7e9c2d2168",
+			"key": "endpoint",
+			"value": "api/register/prepod"
+		},
+		{
+			"id": "adbd1000-d3a3-4d45-9cd8-cf9446ff1be9",
+			"key": "email",
+			"value": "eve.holt@reqres.in"
+		},
+		{
+			"id": "5b2a7962-1638-4bd9-b536-df31541b8250",
+			"key": "password",
+			"value": "pistol"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
