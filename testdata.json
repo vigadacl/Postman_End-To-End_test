@@ -8,5 +8,10 @@
 		"endpoint": "api/register/prepod",
 		"email":  "dovine@reqres.in",
 		"password": "qwertzy"
+	},
+	{ 
+		"endpoint": "api/register/prepod",
+		"email":  "testina@reqres.in",
+		"password": "9876543a"
 	}
 ]
